@@ -1,0 +1,56 @@
+@font-face {
+    font-family: "factorBold";
+    src: url("../font/factor-io-bold.woff2");
+}
+@font-face {
+    font-family: "factorLight";
+    src: url("../font/factor-io-light.woff2");
+}
+@font-face {
+    font-family: "factorMedium";
+    src: url("../font/factor-io-medium.woff2");
+}
+@font-face {
+    font-family: "factorRegular";
+    src: url("../font/factor-io-regular.woff2");
+}
+
+:root{
+    --color1: #e5e5e5;
+    --color2: #f3f5f8;
+    --color3: #7c95ff;
+    --color4: #0a022a;
+    --color5: #fff;
+}
+
+body{
+    background-color: var(--color5);
+    margin: 0;
+    font-family: 'factorBold';
+}
+
+#wrapper{ 
+    background-color: var(--color4);
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 140px;
+    height: 100px;
+    border-radius: 25px;
+    padding: 40px;
+    color: #fff;
+}
+
+h1{
+    font-family: 'factorBold';
+}
+.title{
+    width: 50%;    
+    float: left;
+}
+
+.blockImage{
+    align-items: center;
+    float: left;
+    width: 50%;
+}

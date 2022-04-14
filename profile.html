@@ -1,0 +1,223 @@
+<html>
+    <head>
+        <title>Профиль</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+    </head>
+
+    <body>
+        <div class="uk-container uk-container-large">
+            <div class="uk-section uk-section-default">
+                <div class="uk-container uk-grid-large" uk-grid>
+
+                    <div class="uk-width-1-4@s">
+                        <div>
+                            <div class="uk-card uk-card-default" uk-sticky="offset: 80">
+                                <div class="uk-card-media-top" id="avatar">
+                                    <img src="https://bemeta.co/media/mid/k84VagyGCXnFiqFSHUV3nH.jpg" width="1800" height="1200" alt="">
+                                </div>
+                                
+                                <div class="uk-card-footer">
+                                    <a class="uk-button uk-button-text" uk-toggle="target: #offcanvas-flip">Договориться о встрече</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-3-4@s">
+                        <article class="uk-article">
+                            <ul class="uk-breadcrumb">
+                                <li><a href="index.html">Главная</a></li>
+                                <li><span>Профиль <span id="name">Екатерины</span></span></li>
+                            </ul>
+
+                            <h1 class="uk-text-bold"><a class="uk-link-reset" href="" id="FIO">Екатерина</a></h1>
+                        
+                            <p class="uk-article-meta">Психолог, психотерапевт, гештальт-терапевт</p>
+                        
+                            <p id="detail">Я выбрала основным методом моей работы гештальт-терапию, так как сама в свое время прошла сложный, но и в то же время удивительный путь внутреннего роста, самораскрытия, самоосознания через гештальт. На мой взгляд - это один из самых творческих, глубоких и экологичных для психики методов.
+
+                                Гештальт-терапия - это искренний человеческий диалог - как само средство терапии, так и ее цель. Ведь именно достижение доверительных, равных, уважительных (при всех возможных различиях во взглядах и образе жизни) отношений между клиентом и терапевтом является тем самым исцеляющим фундаментом для качественных позитивных изменений. Здоровые, стабильные отношения лечат!
+                                
+                                На сессиях мы будем говорить о важном. Возможны эксперименты и домашнее задание</p>
+                            
+                                <div>
+                                    <ul class="uk-list uk-list-decimal">
+                                        <li>Стоимость сессии - <span id="bid"></span> рублей</li>
+                                        <li>Адрес: <span id="adress">Трусова 167</span></li>
+                                    </ul>
+                                </div>
+                        
+                            <h2 class="uk-text-bold">Дополнительная информация</h2>
+                            
+                            <ul uk-accordion>
+                                <li>
+                                    <a class="uk-accordion-title" href="#">Что важно знать обо мне</a>
+                                    <div class="uk-accordion-content">
+                                        <p id="about">Я мама троих детей, и это, пожалуй, самая главная моя ценность. Несмотря на это я весьма социально-активная женщина, что тоже очень важно для меня. И это был большой труд моей жизни - сочетать материнство и профессиональную самореализацию. Я смогла найти те пути, чтобы мои ценности шли, как говорится, рука об руку. Я люблю и я любима - и это еще один оплот моей жизни, хотя на пути к личному счастью мне пришлось пережить немало разочарования, потерь, длительный период одиночества. Гештальт-терапия, а также мое личное стремление к изменениям привели меня к тому, что я проживаю жизнь, которую я выбрала и сделала сама, полную и насыщенную. Поэтому психотерапия это не только моя профессия, но и огромная ценность, которую я несу своим клиентам.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="uk-accordion-title" href="#">Профессиональный опыт</a>
+                                    <div class="uk-accordion-content">
+                                        <p id="experience">Я веду свою частную практику уже более 4х лет. Работаю с российскими и зарубежными клиентами он-лайн. Также у меня есть свой кабинет.
+
+                                            Помимо частной практики я работаю в фонде по оказанию психологической помощи родителям и детям в вопросах воспитания/образования.
+                                            
+                                            Я регулярно принимаю участие в психологических интенсивах, форумах, конференциях. Продолжаю совершенствование в гештальт-терапии, учусь на тренера. На данный момент прохожу дополнительную специализацию по семейной психотерапии.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="uk-accordion-title" href="#">Образование</a>
+                                    <div class="uk-accordion-content" id="education">
+                                        
+
+                                        
+                                    </div>
+                                </li>
+                            </ul>
+                        
+                        </article>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+        <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+            <div class="uk-offcanvas-bar">
+        
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
+        
+                <h3>Заявка</h3>
+                
+                <form>
+                    <fieldset class="uk-fieldset">
+                                
+                        <div class="uk-margin">
+                            <input class="uk-input" id="clientFIO" type="text" placeholder="Ваше имя">
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="clientMail" placeholder="Почта">
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="clientPhone" placeholder="Номер телефона">
+                        </div>
+                                
+                        <div class="uk-margin">
+                            <textarea class="uk-textarea" rows="5" id="clientMessage" placeholder="Краткое сообщение"></textarea>
+                        </div>
+
+                        <div class="uk-margin">
+                            <button onclick="sendOrderData()" class="uk-button uk-button-default">Отправить запрос</button>
+                        </div>
+                
+                       
+                
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <script>
+
+
+        const FIO = document.getElementById("FIO");
+        const adress = document.getElementById("adress");
+        const detail = document.getElementById("detail");
+        const experience = document.getElementById("experience");
+        const about = document.getElementById("about");
+        const avatar = document.getElementById("avatar");
+        const name = document.getElementById("name");
+        const bid = document.getElementById("bid");
+
+        const clientFIO = document.getElementById("clientFIO");
+        const clientMail = document.getElementById("clientMail");
+        const clientPhone = document.getElementById("clientPhone");
+        const clientMessage = document.getElementById("clientMessage");
+
+        const education = document.getElementById("education");
+
+        var json = [];
+
+        id_user = localStorage.getItem("id_user");
+        let url = new URL("http://95.213.224.23:3000/psychologist?id="+id_user);
+        
+
+        function sendOrderData(){
+            json = {
+                FIO: clientFIO.value,
+                Mail: clientMail.value,
+                Phone: clientPhone.value,
+                Message: clientMessage.value,
+                id_psychologist: id_user
+            }
+            
+            fetch ('http://95.213.224.23:3000/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            });
+
+        }
+
+
+        
+        fetch(url).then(function(response) {
+            response.json().then(function(data) {
+                console.log(data);
+
+                FIO.innerHTML = data[0].FIO;
+                adress.innerHTML = data[0].adress;
+                detail.innerHTML = data[0].detail;
+                experience.innerHTML = data[0].experience;
+                about.innerHTML = data[0].about;
+                name.innerHTML = data[0].FIO;
+                bid.innerHTML = data[0].bid;
+                avatar.innerHTML = '<img src="'+data[0].avatar+'" width="1800" height="1200" alt="">';
+
+            });
+        });
+
+        fetch("http://95.213.224.23:3000/edu?id="+id_user).then(function(response) {
+            response.json().then(function(data) {
+                
+                var loadJson = data;
+                    console.log(loadJson);
+
+                    for (var i=0; i<loadJson.length; i++){
+                        const div = document.createElement("div");
+                        var data = '\
+                            <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>\
+                                            <div class="uk-card-media-left uk-cover-container">\
+                                                <img src="'+loadJson[i].photo+'" alt="" uk-cover>\
+                                                <canvas width="600" height="200"></canvas>\
+                                            </div>\
+                                            <div>\
+                                                <div class="uk-card-body">\
+                                                    <h3 class="uk-card-title">'+loadJson[i].year+'</h3>\
+                                                    <p>'+loadJson[i].name+'</p>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                        ';
+
+                        div.innerHTML = data;
+                        education.appendChild(div);
+                    }
+
+            });
+        });
+
+
+    </script>
+
+</html>

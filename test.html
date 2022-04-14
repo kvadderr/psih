@@ -1,0 +1,268 @@
+<html>
+    <head>
+        <title>Поиск...</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+    </head>
+    <body>
+        <div class="uk-container uk-container-small">
+            <div class="uk-section uk-section-default">
+                <ul class="uk-breadcrumb">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><span>Подбор психолога</span></li>
+                </ul>
+                <div class="uk-container" id="canvas">
+                                       
+
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script id="moduleDiv" type="text/html">
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Выберите темы, которые беспокоят вас</h3>
+            <p>Выберите одну или несколько главных тем, с которыми хотите разобраться. Это поможет алгоритму точнее подобрать для вас психотерапевта.</p>
+            <ul uk-accordion id="ulAccor"> 
+                               
+            </ul>
+            <button class="uk-button uk-button-secondary uk-width-1-1" onclick="openGender()">Далее</button>
+            <progress class="uk-progress" value="50" max="100"></progress>
+        </div>
+    </script>
+
+    <script id="typeDiv" type="text/html">
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">В каком формате удобнее посещать психотерапевта?</h3>
+            <div class="uk-margin">
+                <select class="uk-select">
+                    <option>Лично</option>
+                    <option>Онлайн</option>
+                </select>
+            </div>
+            <button onclick="openItem()" class="uk-button uk-button-secondary uk-width-1-1">Далее</button>
+            <progress class="uk-progress" value="0" max="100"></progress>
+        </div>
+    </script>
+
+    <script id="genderDiv" type="text/html">
+        
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Укажите пол психолога</h3>
+            <div class="uk-margin">
+                <select class="uk-select" id="genderSelect">
+                    <option value=" ">Пол терапевта не имеет значения</option>
+                    <option value="Женский">Мне важно, чтобы психотерапевт был женщиной</option>
+                    <option value="Мужской">Мне важно, чтобы психотерапевт был мужчиной</option>
+                </select>
+            </div>
+            <button onclick="checkPsy()" class="uk-button uk-button-secondary uk-width-1-1">Далее</button>
+            <progress class="uk-progress" value="75" max="100"></progress>
+        </div>
+
+    </script>
+
+    <script id="psyDiv" type="text/html">
+        
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Оптимальные специалисты</h3>
+            <div class="uk-child-width-1-3@m" uk-grid id="psyCanvas">
+                
+            </div>
+        </div>
+
+    </script>
+
+    <script id="itemDiv" type="text/html">
+        
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">Для кого подбираете психотерапевта?</h3>
+            <div class="uk-margin">
+                <select class="uk-select" id="itemSelect">
+                    <option value="1">Для себя</option>
+                    <option value="2">Для пары</option>
+                    <option value="3">Для семьи</option>
+                    <option value="4">Для ребенка</option>
+                </select>
+            </div>
+            <button onclick="openModul()" class="uk-button uk-button-secondary uk-width-1-1">Далее</button>
+            <progress class="uk-progress" value="25" max="100"></progress>
+        </div>
+
+    </script>
+
+    <script>
+
+        //Глобальные переменные 
+        const url = new URL("http://95.213.224.23:3000/");
+        const canvas = document.getElementById("canvas");
+        var json = [];
+        var id_item = 0;
+        var gender = 0;
+        var module = [];
+        
+        //Выбираем тип записи
+        canvas.innerHTML = document.getElementById("typeDiv").innerHTML;
+        
+        //Выбираем тип записи
+        function openItem(){
+            canvas.innerHTML = document.getElementById("itemDiv").innerHTML; 
+        }
+
+        function openGender(){
+            module = getCheckedCheckBoxes();
+            console.log(module);
+            canvas.innerHTML = document.getElementById("genderDiv").innerHTML; 
+           
+
+        }
+
+        function getCheckedCheckBoxes() {
+            var checkboxes = document.getElementsByClassName('uk-checkbox');
+            var checkboxesChecked = []; // можно в массиве их хранить, если нужно использовать 
+            for (var index = 0; index < checkboxes.length; index++) {
+                if (checkboxes[index].checked) {
+                    checkboxesChecked.push(checkboxes[index].value); // положим в массив выбранный
+                }
+            }
+            return checkboxesChecked; // для использования в нужном месте
+        }
+
+        function checkPsy(){
+            var genderSelect = document.getElementById("genderSelect");
+            gender = genderSelect.value;
+
+            console.log(gender);
+
+            canvas.innerHTML = document.getElementById("psyDiv").innerHTML;
+            const psyCanvas = document.getElementById("psyCanvas");
+
+            var moduleFilter = module.join(', ');
+            
+            if (gender != " "){
+                gender = "AND psychologist.gender = '" + gender+ "'";
+            }
+
+            //Отправляем запрос к серверу
+            fetch(url + "psy?gen="+gender+"&module=" + moduleFilter).then(function(response) {
+                response.json().then(function(data) {
+                    
+                    var loadJson = data;
+                    console.log(loadJson);
+
+                    for (var i=0; i<loadJson.length; i++){
+                        const div = document.createElement("div");
+                        var data = '\
+                            <div class="uk-card uk-card-default">\
+                            <div class="uk-card-badge uk-label">'+loadJson[i].bid+' рублей</div>\
+                            <div class="uk-card-media-top">\
+                                <img src="'+loadJson[i].avatar+'" alt="">\
+                            </div>\
+                            <div class="uk-card-body">\
+                                <h3 class="uk-card-title">'+loadJson[i].FIO+'</h3>\
+                            </div>\
+                            <div class="uk-card-footer">\
+                                <a onclick="gotoProfile('+loadJson[i].id+')" class="uk-button uk-button-text">Перейти в профиль</a>\
+                            </div>\
+                        </div>\
+                        ';
+
+                        div.innerHTML = data;
+                        psyCanvas.appendChild(div);
+                    }
+
+                });
+            });
+
+            
+        }
+
+        function gotoProfile(id_user){
+            localStorage.setItem("id_user", id_user);
+            window.location.href = 'profile.html';
+        }
+
+        //Выбираем тип записи
+        function openModul(){
+
+            //Узнаем что было выбрано
+            var itemSelect = document.getElementById("itemSelect");
+            id_item = itemSelect.value;
+            console.log(id_item);
+
+            //Отправляем запрос к серверу
+            fetch(url + "module?id=" + id_item).then(function(response) {
+                response.json().then(function(data) {
+                    
+                    var loadJson = data;
+                    var count = Object.keys(loadJson).length;
+
+                    for (var i =0; i<count; i++ ){
+                        json_result = loadJson[i].json_result;
+                        json.push(JSON.parse(json_result));
+                    }
+
+                    setData(json)
+
+                });
+            });
+        
+            //Открываем окно модулей
+            canvas.innerHTML = document.getElementById("moduleDiv").innerHTML;
+        }
+
+        function setData(json){
+
+            var ulAccor = document.getElementById("ulAccor");
+            
+            for (var i = 0; i < json.length; i++){
+                const li = document.createElement('li');
+                const divAccord = document.createElement('div');
+                const divSubAccord = document.createElement('div');
+
+                var data = '<a class="uk-accordion-title" href="#">'+json[i].name+'</a>'
+                li.innerHTML = data;
+                
+                
+                moduleJson = json[i].module;
+                setModule(moduleJson, divSubAccord);
+
+                divAccord.className = "uk-accordion-content";
+                divSubAccord.className = "uk-margin uk-grid-small uk-child-width-auto uk-grid";
+                
+                divAccord.appendChild(divSubAccord);
+                li.appendChild(divAccord);               
+
+                
+                ulAccor.appendChild(li);
+            } 
+        }
+
+        function setModule(json, container){
+            for (var i =0; i < json.length; i++){
+                
+                var moduleID = json[i].moduleID;
+                var moduleName = json[i].moduleName;
+
+                const label = document.createElement("label");
+                var data = '<input class="uk-checkbox" value="'+moduleID+'" type="checkbox"> '+moduleName;
+                label.innerHTML =data;
+
+                container.appendChild(label);
+                
+            }
+        }
+
+
+    </script>
+
+
+
+
+</html>

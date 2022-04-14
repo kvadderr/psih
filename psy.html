@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <title>Курсы</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </head>
+
+    <body class="uk-background-muted uk-padding">
+
+        <div class="uk-section">
+            <div class="uk-container uk-container-small uk-card-default uk-card-body">
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <div class="uk-child-width-1-2" uk-grid>
+                            
+                            <div>
+                                <div class="">
+                                    <ul class="uk-breadcrumb">
+                                        <li><a href="index.html">Главная</a></li>
+                                        <li><span>Личный кабинет</span></li>
+                                    </ul>
+        
+                                    <h3 class="uk-text-bold">Личный кабинет психолога</h3>
+                                    <ul class="uk-list uk-list-bullet">
+                                        <li id="FIO"></li>
+                                        <li id="phone">Просмотрите список заявок</li>
+                                        <li id="bid">Удобный инструмент фильтрации данных</li>
+                                    </ul>
+                                
+                                </div>
+                            </div>
+
+                            <div>
+                                <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_kd5rzej5.json"  background="transparent"  speed="1"  style="width: 350px; height: 300px;"  loop  autoplay></lottie-player>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <table class="uk-table uk-table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ФИО клиента</th>
+                                    <th>Номер телефона</th>
+                                    <th>Почта</th>
+                                    <th>Статус</th>
+                                    <th>Операция</th>
+                                </tr>
+                            </thead>
+                            <tbody id="psyTableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </body>
+    <script>
+        const FIO = document.getElementById("FIO");
+        const phone = document.getElementById("phone");
+        const bid = document.getElementById("bid");
+        const psyTableBody = document.getElementById("psyTableBody");
+        const url = new URL("http://95.213.224.23:3000/");
+        let id_user = localStorage.getItem("id_user");
+            
+
+        function getDataPsyApp(){
+            
+            console.log(id_user);
+            psyTableBody.innerHTML = "";
+            fetch(url + "orderByID?id=" + id_user).then(function(response) {
+                response.json().then(function(data) {
+                    console.log(data);
+
+                        for (var i=0; i<data.length; i++){
+                            
+                            let tr = document.createElement("tr");
+                            tr.innerHTML += 
+                                "<td>"  + data[i].FIO + "</td>"+
+                                "<td>"+data[i].phone +"</td>"+
+                                "<td>"+data[i].mail +"</td>"+
+                                "<td>"+
+                                    "<select class='uk-select' id = '"+data[i].id_client+"'>\
+                                        <option value='Рассматривается'>Рассматривается</option>\
+                                        <option value='Принято'>Принято</option>\
+                                        <option value='Отменено' selected>Отменено</option>\
+                                    </select>\
+                                </td>"+
+                                "<td><a onClick ='successPsy("+data[i].id_client+")'>Сохранить</a></td>";
+
+                            psyTableBody.appendChild(tr);
+                            selectSet(data[i].id_client, data[i].status)
+
+                        }                    
+                });
+            });
+            
+        }
+
+        fetch("http://95.213.224.23:3000/psychologist?id="+id_user).then(function(response) {
+            response.json().then(function(data) {
+                console.log(data);
+
+                FIO.innerHTML = "ФИО: " + data[0].FIO;
+                phone.innerHTML = "Номер телефона: " + data[0].phone;
+                bid.innerHTML = "Ставка за час: " + data[0].bid;
+
+            });
+        });
+
+        function selectSet(id, valueToSelect){
+            let select = document.getElementById(id);
+            select.value = valueToSelect;
+        }
+
+        function successPsy(id){
+            
+            let select = document.getElementById(id);
+            
+            fetch ('http://95.213.224.23:3000/order', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                    id: id,
+                    status: select.value
+                })
+            });
+
+            getDataPsyApp();
+
+        }
+
+        getDataPsyApp();
+
+
+    </script>
+</html>

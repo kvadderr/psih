@@ -1,0 +1,307 @@
+<html>
+    <head>
+        <title>Регистрация</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+    </head>
+    <body>
+        <div class="uk-container uk-container-small">
+            <div class="uk-section uk-section-default">
+                <div class="uk-container">
+                    <article class="uk-article">
+                        <ul class="uk-breadcrumb">
+                            <li><a href="index.html">Главная</a></li>
+                            <li><span>Регистрация профиля</span></li>
+                        </ul>
+
+                        <h1 class="uk-text-bold"><a class="uk-link-reset" href="">Создание профиля</a></h1>
+                    
+                        <p class="uk-article-meta">Добро пожаловать в нашу семью</p>
+                    
+                        <p>Введите корректные данные о себе. В течении трех суток администрация свяжется с вами и произведет верификацию вашего аккаунта</p>
+                    
+                        <h2 class="uk-text-bold">Данные обо мне</h2>
+                        <form>
+                            <fieldset class="uk-fieldset">
+                                                
+                                <div class="uk-margin">
+                                    <input class="uk-input" type="text" id="FIO" placeholder="ФИО">
+                                </div>
+                        
+                                <div class="uk-margin">
+                                    <select class="uk-select" id="gender">
+                                        <option>Мужской</option>
+                                        <option>Женский</option>
+                                    </select>
+                                </div>
+                        
+                                <div class="uk-margin">
+                                    <textarea class="uk-textarea" rows="5" id="detail" placeholder="Описание профиля"></textarea>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <textarea class="uk-textarea" rows="5" id="about" placeholder="Что важно знать обо мне"></textarea>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <textarea class="uk-textarea" rows="5" id="experience" placeholder="Профессиональный опыт"></textarea>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <input class="uk-input" type="text" id="avatar" placeholder="Ссылка на вашу фотографию">
+                                </div>
+
+                                
+                                                
+                            </fieldset>
+                        </form>
+
+                        <h2 class="uk-text-bold">Образование</h2>
+                        <a onclick="addBlock()">Добавить</a><br>
+                        <a onclick="deleteBlock()">Удалить</a>
+                        <div class="uk-child-width-1-2@s uk-grid-match" uk-grid id="block">
+                            
+                        </div>
+
+                        <h2 class="uk-text-bold">Выберите специализации</h2>
+
+                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                            <label><input class="uk-radio" type="radio" value="1" onchange="openModul(1);" name="radio2" checked> Для себя</label>
+                            <label><input class="uk-radio" type="radio" value="2" onchange="openModul(2);" name="radio2"> Для пары</label>
+                            <label><input class="uk-radio" type="radio" value="3" onchange="openModul(3);" name="radio2"> Для семьи</label>
+                            <label><input class="uk-radio" type="radio" value="4" onchange="openModul(4);" name="radio2"> Для ребенка</label>
+                        </div>
+                        
+                        <ul uk-accordion id="ulAccor"> 
+                               
+                        </ul>
+
+                        <h2 class="uk-text-bold">Настройки профиля</h2>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="login" placeholder="Логин">
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="password" placeholder="Пароль">
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="adress" placeholder="Адрес">
+                        </div>
+
+                        <div class="uk-margin">
+                            <input class="uk-input" type="text" id="bid" placeholder="Стоимость одной сессии">
+                        </div>
+
+                        <button onclick="dataBuild()" class="uk-button uk-button-secondary uk-width-1-1">Подать заявку</button>
+                    
+                    </article>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script id="moduleDiv" type="text/html">
+        <div class="uk-card uk-card-default uk-card-body">
+            
+           
+        </div>
+    </script>
+    <script>
+        //Глобальные переменные 
+        const url = new URL("http://95.213.224.23:3000/");
+        const canvas = document.getElementById("canvas");
+        const block = document.getElementById("block");
+        const radios = document.querySelectorAll("input");
+        const ulAccor = document.getElementById("ulAccor");
+
+
+        const FIO = document.getElementById("FIO");
+        const avatar = document.getElementById("avatar");
+        const gender = document.getElementById("gender");
+        const detail = document.getElementById("detail");
+        const about = document.getElementById("about");
+        const experience = document.getElementById("experience");
+
+        const bid = document.getElementById("bid");
+        const adress = document.getElementById("adress");
+        const login = document.getElementById("login");
+        const password = document.getElementById("password");
+
+           
+        var json = [];
+        var id_item = 0;
+        var counter = 0;
+        var education = [];
+
+        
+        function dataBuild(){
+            getAllEducation();
+            json = {
+                FIO: FIO.value,
+                avatar: avatar.value,
+                gender: gender.value,
+                detail: detail.value,
+                about: about.value,
+                experience: experience.value,
+                bid: bid.value,
+                adress: adress.value,
+                login: login.value,
+                password: password.value,
+                psymodule: getCheckedCheckBoxes(),
+                education: education
+            }
+
+            fetch ('http://95.213.224.23:3000/psychologist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            });
+
+            console.log(json);
+        }
+
+        function getAllEducation(){
+            education = [];
+            for (var i = 1; i <= counter; i++){
+                var year = document.getElementById("year"+i);
+                var name = document.getElementById("name"+i);
+                var link = document.getElementById("link"+i);
+                educationData = {
+                    year: year.value,
+                    name: name.value,
+                    link: link.value
+                }
+
+                education = [...education, educationData];
+
+            }
+        } 
+
+        openModul(1);
+
+
+        function addBlock(){
+            counter++;
+            var div = document.createElement("div");
+            div.setAttribute("id", "div"+counter);
+            var data = '\
+                <div class="uk-card uk-card-default">\
+                    <div class="uk-card-body">\
+                        <div class="uk-card-badge uk-label">'+counter+'</div>\
+                            <div class="uk-margin">\
+                                <input class="uk-input" type="text" id="year'+counter+'" placeholder="Года обучения">\
+                            </div>\
+                            <div class="uk-margin">\
+                                <input class="uk-input" type="text" id="name'+counter+'"  placeholder="Название учебного заведения">\
+                            </div>\
+                            <div class="uk-margin">\
+                                <input class="uk-input" type="text"  id="link'+counter+'" placeholder="Ссылка на изображение диплома">\
+                            </div> \
+                        </div>\
+                    </div>\
+                </div>\
+            ';
+            div.innerHTML = data;
+            block.appendChild(div);
+        }
+
+        function deleteBlock(){
+            var blockSelected = document.getElementById("div"+counter);  
+            blockSelected.remove();
+            counter--;
+        }
+
+        function getCheckedCheckBoxes() {
+            var checkboxes = document.getElementsByClassName('uk-checkbox');
+            var checkboxesChecked = []; // можно в массиве их хранить, если нужно использовать 
+            for (var index = 0; index < checkboxes.length; index++) {
+                if (checkboxes[index].checked) {
+                    checkboxesChecked.push(checkboxes[index].value); // положим в массив выбранный
+                }
+            }
+            return checkboxesChecked; // для использования в нужном месте
+        }
+
+
+        //Выбираем тип записи
+        function openModul(id){
+
+            ulAccor.textContent = "";
+            var liName = ulAccor.getElementsByClassName("liName");
+
+            while(liName[0]){
+                liName[0].parentNode.removeChild(liName[0]);
+            }
+
+
+            //Узнаем что было выбрано
+            id_item = id;
+            console.log(id_item);
+
+            //Отправляем запрос к серверу
+            fetch(url + "module?id=" + id_item).then(function(response) {
+                response.json().then(function(data) {
+                    
+                    var loadJson = data;
+                    var count = Object.keys(loadJson).length;
+
+                    for (var i =0; i<count; i++ ){
+                        json_result = loadJson[i].json_result;
+                        json.push(JSON.parse(json_result));
+                    }
+
+        
+                    setData(json)
+
+                });
+            });
+        }
+
+        function setData(json){
+
+            for (var i = 0; i < json.length; i++){
+                
+                const li = document.createElement('li');
+                li.className = "liName";
+                const divAccord = document.createElement('div');
+                const divSubAccord = document.createElement('div');
+
+                var data = '<a class="uk-accordion-title" href="#">'+json[i].name+'</a>'
+                li.innerHTML = data;
+                
+                
+                moduleJson = json[i].module;
+                setModule(moduleJson, divSubAccord);
+
+                divAccord.className = "uk-accordion-content";
+                divSubAccord.className = "uk-margin uk-grid uk-child-width-auto uk-grid";
+                
+                divAccord.appendChild(divSubAccord);
+                li.appendChild(divAccord);
+                ulAccor.appendChild(li);
+            } 
+        }
+
+        function setModule(json, container){
+            for (var i =0; i < json.length; i++){
+                    
+                var moduleID = json[i].moduleID;
+                var moduleName = json[i].moduleName;
+
+                const label = document.createElement("label");
+                var data = '<input class="uk-checkbox" value="'+moduleID+'" type="checkbox"> '+moduleName;
+                label.innerHTML =data;
+                container.appendChild(label);
+                    
+            }
+        }
+    
+    </script>
+</html>

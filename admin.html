@@ -1,0 +1,201 @@
+<html>
+    <head>
+        <title>PsySystem</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </head>
+
+    <body class="uk-background-muted uk-padding">
+
+        <div class="uk-section">
+            <div class="uk-container uk-container-small uk-card-default uk-card-body">
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <div class="uk-child-width-1-2" uk-grid>
+                            
+                            <div>
+                                <div class="">
+                                    <ul class="uk-breadcrumb">
+                                        <li><a href="index.html">Главная</a></li>
+                                        <li><span>Администрация</span></li>
+                                    </ul>
+        
+                                    <h3 class="uk-text-bold">Кабинет администратора</h3>
+                                    <ul class="uk-list uk-list-bullet">
+                                        <li>Проверьте новых специалистов и выставите им статус</li>
+                                        <li>Просмотрите список заявок</li>
+                                        <li>Удобный инструмент фильтрации данных</li>
+                                    </ul>
+                                
+                                </div>
+                            </div>
+
+                            <div>
+                                <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_ktk3nph7.json"  background="transparent"  speed="1"  style="width: 350px; height: 300px;"  loop  autoplay></lottie-player>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <ul class="uk-tab-bottom" uk-tab data-uk-tab="{connect:'#my-id2'}">
+                            <li class="uk-active"><a href="#">Новые специалисты</a></li>
+                            <li><a href="#">Заявки</a></li>
+                        </ul>
+
+                        <ul class="uk-switcher uk-margin" id="my-id2">
+                            <li>
+                                <div class="uk-container">
+                                    
+                                    <table class="uk-table uk-table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ФИО</th>
+                                                <th>Номер телефона</th>
+                                                <th>Профиль</th>
+                                                <th>Подтвердить</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="psyTableBody">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <div class="uk-container">
+                                    <div class="uk-margin">
+                                        <input onkeyup="myFunction()" class="uk-input" type="text" id="myInput" placeholder="Введите ФИО специалиста">
+                                    </div>
+                                    <table id="myTable" class="uk-table uk-table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Специалист</th>
+                                                <th>ФИО клиента</th>
+                                                <th>Номер клиента</th>
+                                                <th>Статус</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="orderTableBody">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                
+             
+
+        
+                
+
+            </div>
+            
+        </div>
+        
+
+    </body>
+    <script>
+        const psyTableBody = document.getElementById("psyTableBody");
+        const orderTableBody = document.getElementById("orderTableBody");
+        
+        const url = new URL("http://95.213.224.23:3000/");
+            
+        function getDataPsyApp(){
+            psyTableBody.innerHTML = "";
+            fetch(url + "application").then(function(response) {
+                response.json().then(function(data) {
+                    console.log(data);
+
+                        for (var i=0; i<data.length; i++){
+                            
+                            let tr = document.createElement("tr");
+                            tr.innerHTML += "<td>"  + data[i].FIO + "</td><td>"+data[i].phone +"</td><td><a onClick ='goToProfile("+data[i].id+")'>Профиль</a></td><td><a onClick ='successPsy("+data[i].id+")'>Подтвердить</a></td>";
+                            
+                            psyTableBody.appendChild(tr);
+                        }                    
+                });
+            });
+            
+        }
+
+        function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+            }
+        }
+        }
+
+        function getDataOrder(){
+            orderTableBody.innerHTML = "";
+            fetch(url + "order").then(function(response) {
+                response.json().then(function(data) {
+                    console.log(data);
+
+                        for (var i=0; i<data.length; i++){
+                            
+                            let tr = document.createElement("tr");
+                            tr.innerHTML += "<td>"  + data[i].PsyFIO + "</td><td>"+data[i].FIO +"</td><td>"+data[i].phone +"</td><td>"+data[i].status +"</td>";
+                            
+                            orderTableBody.appendChild(tr);
+                        }                    
+                });
+            });
+            
+        }
+
+        getDataOrder();
+
+        function successPsy(id_user){
+            fetch ('http://95.213.224.23:3000/success', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                    id: id_user
+                })
+            });
+
+            getDataPsyApp();
+
+        }
+
+        function goToProfile(id_user){
+            localStorage.setItem("id_user", id_user);
+            window.location.href = 'profile.html';
+        }
+
+        getDataPsyApp();
+
+
+    </script>
+</html>

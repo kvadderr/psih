@@ -1,0 +1,190 @@
+<html>
+    <head>
+        <title>PsySystem</title>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/css/uikit.min.css" />
+
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.13.1/dist/js/uikit-icons.min.js"></script>
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </head>
+
+    <body class="uk-background-muted uk-padding">
+
+        <div class="uk-section">
+            <div class="uk-container uk-container-small uk-card-default uk-card-body">
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <div class="uk-child-width-1-2" uk-grid>
+                            
+                            <div>
+                                <div class="">
+                                    <h3 class="uk-text-bold">Подберем проверенного психолога или психотерапевта для онлайн и личных консультаций</h3>
+                                    <ul class="uk-list uk-list-bullet">
+                                        <li>PSYSystem - система для подбора психологов</li>
+                                        <li>Удобный личный кабинет</li>
+                                        <li>Оптимальный алгоритм подбора специалиста</li>
+                                    </ul>
+                                    <a class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" href="test.html">Бесплатно подобрать психотерапевта</a>
+                                </div>
+                            </div>
+
+                            <div>
+                                <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hebegwpc.json"  background="transparent"  speed="1"  style="width: 350px; height: 300px;"  loop  autoplay></lottie-player>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-container">
+                        <div class="uk-flex-middle" uk-grid>
+                            <div class="uk-width-2-3@m">
+                                <p>Нам важно, чтобы психотерапевтическая помощь была доступна каждому вне зависимости от финансовых возможностей. Поэтому мы сотрудничаем не только с опытными терапевтами, но и с теми, кто еще не завершил обучение психотерапии или не набрал большого опыта. Стоимость услуг таких специалистов минимальна и они также проходят проверку для попадания в базу Меты. Мы сотрудничаем только с теми, кого рекомендуют преподаватели учебных терапевтических программ или наши эксперты по результатам проведенного интервью.</p>
+                            </div>
+                            <div class="uk-width-1-3@m uk-flex-first">
+                                <lottie-player  src="https://assets8.lottiefiles.com/packages/lf20_scrpsgm1.json" background="transparent"  speed="1"  style="width: 250px; height: 250px;"  loop  autoplay></lottie-player>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-padding uk-section uk-section-default">
+                    <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+                        <div>
+                            <div class="uk-card uk-card-hover uk-card-default uk-card-body">
+                                <h3 class="uk-card-title">Проверяем образование</h3>
+                                <ul class="uk-list uk-list-decimal">
+                                    <li>Законченное высшее психологическое или медицинское образование</li>
+                                    <li>Дополнительное образование по профильному направлению психотерапии</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="uk-card uk-card-hover uk-card-primary uk-card-body">
+                                <h3 class="uk-card-title">Проверяем профессионализм и опыт</h3>
+                                <ul class="uk-list uk-list-decimal">
+                                    <li>Решение психотерапевтами практических кейсов</li>
+                                    <li>Собеседование для определения уровня профессионализма, соблюдения этических норм</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <div class="uk-card uk-card-hover uk-card-secondary uk-card-body">
+                            <h3 class="uk-card-title">Регулярно получаем обратную связь от клиентов</h3>
+                            <ul class="uk-list uk-list-decimal">
+                                <li>Внимательно анализируем всю обратную связь, которая поступает на специалиста, и подключаемся к решению проблемных ситуаций</li>
+                                <li>Если вам не подойдет специалист, наши эксперты подберут вам другого, ориентируясь на сформулированные вами запросы и ожидания</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+        
+                
+
+            </div>
+            
+        </div>
+        
+        <div class="uk-position-fixed uk-position-center-right uk-margin-large-right uk-card-secondary uk-card-body">
+            <a uk-toggle="target: #my-id" class="uk-icon-button" uk-icon="sign-in"></a>
+            <br><br>
+            <a uk-toggle="target: #connectDiv"  href="" class="uk-icon-button" uk-icon="question"></a>
+        </div>
+
+        <!-- This is the modal -->
+        <div id="my-id" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-text-bold">Авторизация</h2>
+                <div class="uk-margin">
+                    <input class="uk-input" id="login" type="text" placeholder="Логин">
+                </div>
+
+                <div class="uk-margin">
+                    <input class="uk-input" id="password" type="password" placeholder="Пароль">
+                </div>
+        
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" onclick="goToRegister()" type="button">Регистрация</button>
+                    <button class="uk-button uk-button-primary" type="button" onclick="login()">Войти</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- This is the modal -->
+        <div id="connectDiv" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body">
+                <h2 class="uk-text-bold">Обратная связь</h2>
+                <div class="uk-margin">
+                    <input class="uk-input" type="text" id="contact" placeholder="Контакты для обратной связи">
+                </div>
+
+                <div class="uk-margin">
+                    <textarea class="uk-textarea" rows="5" id="message" placeholder="Ваш текст"></textarea>
+                </div>
+        
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+                    <button class="uk-button uk-button-primary" onclick="sendSupport()" type="button">Отправить</button>
+                </p>
+            </div>
+        </div>
+
+    </body>
+
+    <script>
+        
+        const loginInput = document.getElementById("login");
+        const passwordInput = document.getElementById("password");
+        const message = document.getElementById("message");
+        const contact = document.getElementById("contact");
+
+
+        function sendSupport(){
+            fetch ('http://95.213.224.23:3000/sendSupport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                    text: message.value, 
+                    data: contact.value
+                })
+            });
+            alert("Сообщение отправлено! Ожидайте обратной связи");
+             
+        }
+
+        function login(){
+
+            if (loginInput.value == 'admin' && passwordInput.value == "root") {
+                window.location.href = 'admin.html';
+            } else {
+                const urlToUsers =  new URL("http://95.213.224.23:3000/login?login="+loginInput.value+"&pass="+passwordInput.value);
+                fetch(urlToUsers).then(function(response) {
+                    response.json().then(function(data) {
+                        if (data.length == 0) {
+                            alert('Неверные данные!')
+                            return
+                        } 
+                        localStorage.setItem("id_user", data[0].id);
+                        window.location.href = 'psy.html';
+                    })
+                })
+            }
+        }
+        
+        function goToRegister(){
+            window.location.href = 'register.html';
+        }
+
+    </script>
+
+</html>
